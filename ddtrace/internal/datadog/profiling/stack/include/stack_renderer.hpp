@@ -9,7 +9,6 @@
 #include "dd_wrapper/include/sample.hpp"
 
 #include "echion/frame.h"
-#include "echion/timing.h"
 
 namespace Datadog {
 
@@ -55,8 +54,8 @@ struct ThreadState
     uintptr_t id = 0;
     unsigned long native_id = 0;
     std::string name;
-    microsecond_t wall_time_ns = 0;
-    microsecond_t cpu_time_ns = 0;
+    int64_t wall_time_ns = 0;
+    int64_t cpu_time_ns = 0;
     int64_t now_time_ns = 0;
 };
 
@@ -80,13 +79,13 @@ class StackRenderer
     StackRenderer();
     void render_thread_begin(PyThreadState* tstate,
                              std::string_view name,
-                             microsecond_t wall_time_us,
+                             int64_t wall_time_us,
                              uintptr_t thread_id,
                              unsigned long native_id);
     void render_task_begin(const std::string& task_name, bool on_cpu);
     void render_stack_begin();
     void render_frame(Frame& frame);
-    void render_cpu_time(uint64_t cpu_time_us);
+    void render_cpu_time(int64_t cpu_time_us);
     void render_stack_end();
 
     // Clear caches after fork to avoid using stale interned string/function IDs

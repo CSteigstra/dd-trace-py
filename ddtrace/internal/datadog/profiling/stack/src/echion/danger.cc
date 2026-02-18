@@ -141,6 +141,7 @@ safe_memcpy(void* dst, const void* src, size_t n)
 
     // Copy in page-bounded chunks (at most one fault per bad page).
     while (rem) {
+        // Values are always <= page_size, so the unsigned-to-signed narrowing is safe.
         safe_memcpy_return_t to_src_pg = static_cast<safe_memcpy_return_t>(
           page_size - (static_cast<uintptr_t>(reinterpret_cast<uintptr_t>(s)) & (page_size - 1)));
         safe_memcpy_return_t to_dst_pg = static_cast<safe_memcpy_return_t>(

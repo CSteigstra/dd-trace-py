@@ -620,7 +620,7 @@ Result<void>
 ThreadInfo::sample(EchionSampler& echion, PyThreadState* tstate, microsecond_t delta)
 {
     auto& renderer = echion.renderer();
-    renderer.render_thread_begin(tstate, name, delta, thread_id, native_id);
+    renderer.render_thread_begin(tstate, name, static_cast<int64_t>(delta), thread_id, native_id);
 
     microsecond_t previous_cpu_time = cpu_time;
     auto update_cpu_time_success = update_cpu_time();
@@ -628,7 +628,7 @@ ThreadInfo::sample(EchionSampler& echion, PyThreadState* tstate, microsecond_t d
         return ErrorKind::CpuTimeError;
     }
 
-    renderer.render_cpu_time(cpu_time - previous_cpu_time);
+    renderer.render_cpu_time(static_cast<int64_t>(cpu_time - previous_cpu_time));
 
     this->unwind(echion, tstate);
 
