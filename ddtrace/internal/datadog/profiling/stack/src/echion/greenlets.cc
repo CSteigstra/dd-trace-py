@@ -29,5 +29,4 @@ GreenletInfo::unwind(EchionSampler& echion, PyObject* cur_frame, PyThreadState* 
     unwind_frame(echion, frame_addr, stack);
 
     stack.push_back(Frame::get(echion, name));
-
 }

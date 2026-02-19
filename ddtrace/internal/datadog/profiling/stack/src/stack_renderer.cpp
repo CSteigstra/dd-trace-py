@@ -215,7 +215,7 @@ StackRenderer::render_frame(Frame& frame)
 }
 
 void
-StackRenderer::render_cpu_time(int64_t cpu_time_us)
+StackRenderer::render_cpu_time(microsecond_t cpu_time_us)
 {
     if (sample == nullptr) {
         std::cerr << "Received a CPU time without sample storage.  Some profiling data has been lost." << std::endl;
